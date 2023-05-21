@@ -27,8 +27,9 @@ def submit_login(request):
             login(request,usuario)
             return redirect('/')
         else:
-            messages.error(request,'Usuario ou senha invalidos') 
-    return redirect('/')
+            messages.error(request,'Usuario ou senha invalidos')
+    else:
+        redirect('/')
     
 
 @login_required(login_url='/login/')
@@ -38,6 +39,10 @@ def lista_eventos(request):
     Evento = evento.objects.filter(usuario=usuario)    #filter(usuario=usuario)
     response = {'eventos': Evento}
     return render(request, 'agenda.html',response)
+
+@login_required(login_url='/login/')
+def Evento(request):
+    return render(request, 'evento.html')
 
 
     
