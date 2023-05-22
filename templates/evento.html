@@ -3,7 +3,7 @@
 {% block content %}
 <body style="text-align: center;">
      <h1 style="font-size: 50px;"> Evento </h1>
-
+<form action= 'submit' method="POST"> {%csrf_token%}
             <label>
         Titulo: 
             </label>
@@ -14,16 +14,21 @@
         Data do Evento:
             </label>
                     <br>
-                    <input type="datetime-local" name="data_evento"; size="23">
+                    <input type="datetime-local" name="data_evento"  size="28">
                     <br><br> 
              <label>
          Descricao do Evento:
              </label> 
                     <br> 
-                    <textarea name="descricao";></textarea>
+                    <textarea name="descricao" rows="5" cols="23"></textarea>
+                    <br><br> 
+
+                    <button type="submit"> Salvar </button>
+                    <a href= "/" >
+                        <button type="button"> Cancelar </button>
+                    </a>
+</form>                 
 </body>
-
-
 
 <br><br><br>
 {% endblock %}
