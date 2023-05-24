@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages 
 from datetime import datetime, timedelta
+from django.http.response import Http404, JsonResponse
 
 # def hello(request,nome):
 #     return HttpResponse('<h1> Hello {} </h1>'.format(nome)
@@ -79,12 +80,21 @@ def submit_evento(request):
 @login_required(login_url='/login/')
 def delete_evento(request, id_evento):
     usuario = request.user
-    Evento = evento.objects.get(id=id_evento)
+    try:
+        Evento = evento.objects.get(id=id_evento)
+    except Exception:
+        raise Http404
     if usuario == Evento.usuario:
         Evento.delete()
+    else:
+        raise Http404
     return redirect('/') 
-    
-    
+
+@login_required(login_url='/login/')
+def json_lista_evento(request):
+    usuario = request.user
+    Evento = evento.objects.filter(usuario=usuario).values("id","titulo")
+    return JsonResponse(list(Evento), safe=False)
 
 
     
